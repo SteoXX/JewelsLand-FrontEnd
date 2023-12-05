@@ -11,6 +11,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { withTheme } from 'styled-components';
 import { darken } from "polished";
 
+import axios from 'axios';
+
 
 function LoginForm({theme}) {
   const [isRegistered, setIsRegistered] = React.useState(true);
@@ -29,6 +31,20 @@ function LoginForm({theme}) {
   const handleClickShowPassword2 = () => {
     setShowPassword2(!showPassword2);
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    const user = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+  
+    const response = await axios.post('http://localhost:3000/register', user);
+  
+    console.log(response.data);
+  };
+  
 
 
   return (
@@ -156,6 +172,7 @@ function LoginForm({theme}) {
         {/* Changin the text between "Log in" and "Not registered?" */}
         <Button variant="contained" sx={{ mt: 3, mb: 2}}>
           {isRegistered ? 'Log in' : 'Register'}
+          
         </Button>
 
         {/* When pressing the "NOT REGISTERED" make appear the "Confirm Password button" and changing the text in Already registered? Sign in */}
