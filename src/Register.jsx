@@ -16,14 +16,18 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 
 
-function LoginForm({theme}) {
+function RegisterForm({theme}) {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword2, setShowPassword2] = React.useState(false);
 
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleClickShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,7 +37,7 @@ function LoginForm({theme}) {
       password: event.target.password.value,
     };
   
-    const response = await axios.post('http://localhost:3000/login', user);
+    const response = await axios.post('http://localhost:3000/register', user);
   
     console.log(response.data);
   };
@@ -84,7 +88,7 @@ function LoginForm({theme}) {
             color: theme?.text,
           }}
         >
-          {'Sign in'}
+          {'Register'}
         </Typography>
 
         {/* Boxes */}
@@ -135,21 +139,44 @@ function LoginForm({theme}) {
             }}
           />
           
-          
+          {/* When pressing the "NOT REGISTERED" make appear the "Confirm Password button" */}
+            <TextField
+              required
+              id="outlined-confirm-password-input"
+              label="Confirm Password"
+              type={showPassword2 ? 'text' : 'password'}
+              autoComplete="current-password"
+              fullWidth
+              InputProps={{
+                style: { borderRadius: '12px'},
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword2}
+                      edge="end"
+                    >
+                      {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
         </Box>
 
         {/* Changin the text between "Log in" and "Not registered?" */}
         <Button variant="contained" sx={{ mt: 3, mb: 2}} onClick={() => handleSubmit()}>
-          {'Log in'}
+          {'Register'}
         </Button>
 
         {/* When pressing the "NOT REGISTERED" make appear the "Confirm Password button" and changing the text in Already registered? Sign in */}
         <Button variant="text" sx={{ mt: 3, mb: 2}}>
-          <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }} underline='none'>Not registered? Register</Link>
+          <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }} underline='none'>Already registered? Sign in</Link>
         </Button>  
       </Box>
     </Container>
   );
 }
 
-export default withTheme(LoginForm);
+export default withTheme(RegisterForm);

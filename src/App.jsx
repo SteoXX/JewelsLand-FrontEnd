@@ -1,9 +1,13 @@
+import Home from "./Home";
 import Login from "./Login";
+import Register from "./Register";
 
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import {lightTheme, darkTheme} from './themes';
+
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   
@@ -23,10 +27,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   // CHANGE COLOR OF THE SHOW/HIDE ICONS (password and confirm password)
-  .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
+  .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root, .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
     color: ${props => props.theme.text}!important;
   }
 
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    color: ${props => props.theme.text}!important;
+  }
 `;
 
   const [theme] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches? 'dark' : 'light');
@@ -34,7 +41,11 @@ const GlobalStyle = createGlobalStyle`
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
-      <Login />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Routes>
     </ThemeProvider>
   );
 }
