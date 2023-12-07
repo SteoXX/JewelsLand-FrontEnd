@@ -2,49 +2,51 @@ import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
 
-import { useState } from 'react';
-import { ThemeProvider } from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
-import {lightTheme, darkTheme} from './themes';
+import { useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
+import { lightTheme, darkTheme } from "./themes";
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  
-const GlobalStyle = createGlobalStyle`
+  const GlobalStyle = createGlobalStyle`
   body, html, #root, .App {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: ${props => props.theme.bgcolor};  remove this to fix the bg color
-    color: ${props => props.theme.text};
+    background-color: ${(props) =>
+      props.theme.bgcolor};  remove this to fix the bg color
+    color: ${(props) => props.theme.text};
   }
 
   // CHANGE COLOR OF THE PLACEHOLDERS (email and password)
   .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-    color: ${props => props.theme.text}!important;
+    color: ${(props) => props.theme.text}!important;
   }
 
   // CHANGE COLOR OF THE SHOW/HIDE ICONS (password and confirm password)
   .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root, .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-    color: ${props => props.theme.text}!important;
+    color: ${(props) => props.theme.text}!important;
   }
 
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-    color: ${props => props.theme.text}!important;
+    color: ${(props) => props.theme.text}!important;
   }
 `;
 
-  const [theme] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches? 'dark' : 'light');
+  const [theme] = useState(
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  );
 
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </ThemeProvider>
   );
