@@ -13,32 +13,36 @@ import { withTheme } from "styled-components";
 function VerifyEmail({ theme }) {
   const { token } = useParams();
   const [emailVerified, setEmailVerified] = React.useState(false);
-  const [newToken, setNewToken] = React.useState(false);
+  const [getNewToken, setGetNewToken] = React.useState(false);
 
   const handleVerifyEmail = async (event) => {
     event.preventDefault();
 
     const response = await axios.post(
       `http://localhost:3001/verify_your_email/${token}`,
-      { emailVerificationToken: token, newToken: newToken }
+      { emailVerificationToken: token }
     );
 
-    if (!newToken) {
-      if (response.data.status === "EmailAlreadyVerified") {
-        alert("Email is already verified");
-        window.location.href = "/login";
-      } else if (response.data.status === "TokenExpired") {
-        alert("Token has expired");
-        setNewToken(true);
-      } else if (response.data.status === "InvalidToken") {
-        alert("Invalid token");
-        setNewToken(true);
-      } else if (response.data.status === "EmailVerified") {
-        setEmailVerified(true);
-      }
-    } else {
-      //TODO
+    if (response.data.status === "EmailAlreadyVerified") {
+      alert("Email is already verified");
+      window.location.href = "/login";
+    } else if (response.data.status === "TokenExpired") {
+      alert("Token has expired");
+      setGetNewToken(true);
+    } else if (response.data.status === "InvalidToken") {
+      alert("Invalid token");
+      setGetNewToken(true);
+    } else if (response.data.status === "EmailVerified") {
+      setEmailVerified(true);
     }
+  };
+
+  const handleGetNewToken = async (event) => {
+    event.preventDefault();
+
+    const response = await axios.post(
+      "http://localhost:3001/get_new_email_verification_token"
+    );
   };
 
   return (
@@ -56,7 +60,7 @@ function VerifyEmail({ theme }) {
       >
         Verify Email Page
       </Typography>
-      {newToken ? (
+      {getNewToken ? (
         <Box>
           <Typography
             variant="h5"
@@ -71,7 +75,7 @@ function VerifyEmail({ theme }) {
           <Button
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={handleVerifyEmail}
+            onClick={handleGetNewToken}
           >
             Get a new token
           </Button>
