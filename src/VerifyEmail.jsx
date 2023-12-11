@@ -41,8 +41,18 @@ function VerifyEmail({ theme }) {
     event.preventDefault();
 
     const response = await axios.post(
-      "http://localhost:3001/get_new_email_verification_token"
+      "http://localhost:3001/get_new_email_verification_token",
+      { oldEmailVerificationToken: token }
     );
+
+    if (response.data.status === "EmailAlreadyVerified") {
+      alert("Email is already verified");
+      window.location.href = "/login";
+    } else if (response.data.status === "EmailSent") {
+      //TODO
+    } else if (response.data.status === "ErrorSendingEmail") {
+      alert("Error sending email");
+    }
   };
 
   return (

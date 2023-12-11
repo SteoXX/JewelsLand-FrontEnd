@@ -2,6 +2,8 @@ import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
 import VerifyEmail from "./VerifyEmail";
+import ForgotPassword from "./ForgotPassword";
+import ResetPassword from "./ResetPassword";
 
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
@@ -49,6 +51,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify_your_email/:token" element={<VerifyEmail />} />
+        <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/reset_password/:token" element={<ResetPassword />} />
       </Routes>
     </ThemeProvider>
   );

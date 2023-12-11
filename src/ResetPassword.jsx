@@ -6,75 +6,75 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
+
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import { withTheme } from "styled-components";
 import { darken } from "polished";
 
+import { useParams } from "react-router-dom";
+
 import axios from "axios";
 
-import { Link } from "react-router-dom";
-
-function LoginForm({ theme }) {
+function ResetPassword({ theme }) {
+  const { token } = useParams();
   const [showPassword, setShowPassword] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+  const [showPassword2, setShowPassword2] = React.useState(false);
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
 
-  // When something changes in the text field, update the value of email and password
-  const handleChangeEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
+  // When something changes in the text field, update the value of password and confirmPassword
   const handleChangePassword = (event) => {
     setPassword(event.target.value);
   };
 
-  // Control the visibility of the password field
+  const handleChangeConfirmpassword = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  // Control the visibility of the password and confirmPassword fields
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleClickShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
   };
 
   // When the form is submitted, send the data to the backend
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Create a User object with the email and password to send to the backend
-    const user = {
-      email: email,
-      password: password,
-    };
+    // Chech if the password and confirmPassword value matches
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
     // Send the data to the backend
-    const response = await axios.post("http://localhost:3001/login", user);
-
-    // Print the response from the backend to the console
-    console.log(response.data);
-  };
-
-  // Re-send email for verification
-  const resendEmail = async (event) => {
-    event.preventDefault();
-
     const response = await axios.post(
-      "http://localhost:3001/resend_email_verification",
-      { email: email }
+      `http://localhost:3001/reset_password/${token}`,
+      {
+        changePasswordToken: token,
+        password: password,
+        confirmPassword: confirmPassword,
+      }
     );
 
-    if (response.data.status === "NotRegisteredYet") {
-      alert("Email is not registered yet");
-    } else if (response.data.status === "EmailAlreadyVerified") {
-      alert("Email is already verified");
+    if (response.data.status === "PasswordChanged") {
+      alert("Password changed");
       window.location.href = "/login";
-    } else if (response.data.status === "EmailSent") {
-      //TODO
-    } else if (response.data.status === "ErrorSendingEmail") {
-      alert("Error sending email");
+    } else if (response.data.status === "PasswordsDoNotMatch") {
+      alert("Passwords do not match");
+    } else if (response.data.status === "InvalidToken") {
+      alert("Invalid token");
     }
   };
 
   return (
     <Container maxWidth="xs">
-      {/* Creating the box that contains the email ans password input text */}
+      {/* Creating the box that contains the email, password and confirmPassword input text */}
       <Box
         component="form"
         sx={{
@@ -104,18 +104,7 @@ function LoginForm({ theme }) {
             color: theme?.text,
           }}
         >
-          {"Welcome to JewishLand"}
-        </Typography>
-
-        {/* Create the text 'Sign in' */}
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{
-            color: theme?.text,
-          }}
-        >
-          {"Sign in"}
+          Reset your password
         </Typography>
 
         {/* Boxes */}
@@ -128,23 +117,7 @@ function LoginForm({ theme }) {
             justifyContent: "center",
           }}
         >
-          {/* Email TextField */}
-          <TextField
-            required
-            id="outlined-required"
-            label="Email"
-            type="email"
-            fullWidth
-            // rounding the border of the input field
-            InputProps={{
-              style: { borderRadius: "12px" },
-            }}
-            // changing email logic
-            value={email}
-            onChange={handleChangeEmail}
-          />
-
-          {/* Password TextField */}
+          {/* Password textField */}
           <TextField
             required
             id="outlined-password-input"
@@ -153,7 +126,7 @@ function LoginForm({ theme }) {
             autoComplete="current-password"
             fullWidth
             InputProps={{
-              style: { borderRadius: "12px", color: theme?.text }, // backgroundColor change the color of the box
+              style: { borderRadius: "12px", color: theme?.text },
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
@@ -170,45 +143,45 @@ function LoginForm({ theme }) {
             value={password}
             onChange={handleChangePassword}
           />
+
+          {/* Creating a text field for the confirmPassword */}
+          <TextField
+            required
+            id="outlined-confirm-password-input"
+            label="Confirm Password"
+            type={showPassword2 ? "text" : "password"}
+            autoComplete="current-password"
+            fullWidth
+            InputProps={{
+              style: { borderRadius: "12px" },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword2}
+                    edge="end"
+                  >
+                    {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            value={confirmPassword}
+            onChange={handleChangeConfirmpassword}
+          />
         </Box>
 
-        {/* Create the 'Sing in' box and call the handleSubmit function on click */}
+        {/* Create the 'Register' box and call the handleSubmit function on click */}
         <Button
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
           onClick={handleSubmit}
         >
-          Log in
-        </Button>
-
-        {/* When pressing the "NOT REGISTERED" redirect the user to the login page */}
-        <Button variant="text" sx={{ mt: 3, mb: 2 }}>
-          <Link
-            to="/register"
-            style={{ textDecoration: "none", color: "inherit" }}
-            underline="none"
-          >
-            Not registered? Register
-          </Link>
-        </Button>
-
-        {/* resend email for verification */}
-        <Button variant="text" sx={{ mt: 0, mb: 2 }} onClick={resendEmail}>
-          Re-send email verification
-        </Button>
-
-        <Button variant="text" sx={{ mt: 0, mb: 2 }}>
-          <Link
-            to="/forgot_password"
-            style={{ textDecoration: "none", color: "inherit" }}
-            underline="none"
-          >
-            Forgot password?
-          </Link>
+          Confirm
         </Button>
       </Box>
     </Container>
   );
 }
 
-export default withTheme(LoginForm);
+export default withTheme(ResetPassword);
