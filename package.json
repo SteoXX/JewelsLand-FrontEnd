@@ -20,6 +20,7 @@
     "mysql2": "^3.6.5",
     "polished": "^4.2.2",
     "react": "^18.2.0",
+    "react-cookie-consent": "^9.0.0",
     "react-dom": "^18.2.0",
     "react-google-recaptcha-v3": "^1.10.1",
     "react-router-dom": "^6.20.1",

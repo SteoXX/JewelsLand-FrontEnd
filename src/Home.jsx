@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import Avatar from "@mui/material/Avatar";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -12,9 +13,12 @@ import Box from "@mui/material/Box";
 
 import { withTheme } from "styled-components";
 import { darken } from "polished";
+import { Typography } from "@mui/material";
 
 function Home({ theme }) {
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userImage, setUserImage] = useState("");
 
   const handleShowHideDrawer = () => {
     setOpen(!open);
@@ -37,9 +41,21 @@ function Home({ theme }) {
 
             <Box sx={{ flexGrow: 1 }} />
 
+            <Typography
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
+            >
+              JewishLand
+            </Typography>
+
+            <Box sx={{ flexGrow: 1 }} />
+
             {/* Icon Button for account managment */}
             <IconButton color="inherit">
-              <AccountCircle />
+              {isLoggedIn ? <Avatar src={userImage} /> : <AccountCircle />}
             </IconButton>
           </Toolbar>
         </AppBar>
