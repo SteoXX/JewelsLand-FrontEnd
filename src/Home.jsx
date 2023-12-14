@@ -53,10 +53,9 @@ function Home({ theme }) {
 
   // Check if the user is logged in or not (session cookie)
   const checkLoginStatus = async () => {
-    const instance = axios.create({ withCredentials: true });
-    const response = await instance.get(
-      "http://localhost:3001/checkLoginStatus"
-    );
+    const response = await axios.get("http://localhost:3001/checkLoginStatus", {
+      withCredentials: true,
+    });
     if (response.data.isLoggedIn) {
       setIsLoggedIn(true);
     } else {
