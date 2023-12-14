@@ -34,7 +34,7 @@ function LoginForm({ theme }) {
     setShowPassword(!showPassword);
   };
 
-  // When the form is submitted, send the data to the backend
+  // LOG IN
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -47,11 +47,19 @@ function LoginForm({ theme }) {
     // Send the data to the backend
     const response = await axios.post("http://localhost:3001/login", user);
 
-    // Print the response from the backend to the console
-    console.log(response.data);
+    // Use the response data to navigate or show errors
+    if (response.data.status === "LoginSuccessful") {
+      window.location.href = "http://localhost:3000";
+    } else if (response.data.status === "InvalidCredentials") {
+      alert("Invalid Credentials");
+    } else if (response.data.status === "UserNotFound") {
+      alert("User Not Found");
+    } else if (response.data.status === "EmailNotVerified") {
+      alert("Email Not Verified");
+    }
   };
 
-  // Re-send email for verification
+  // RESEND EMAIL FOR VERIFICATION
   const resendEmail = async (event) => {
     event.preventDefault();
 
@@ -104,7 +112,7 @@ function LoginForm({ theme }) {
             color: theme?.text,
           }}
         >
-          {"Welcome to JewishLand"}
+          Welcome to JewelsLand
         </Typography>
 
         {/* Create the text 'Sign in' */}

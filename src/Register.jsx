@@ -109,7 +109,7 @@ function RegisterForm({ theme }) {
             color: theme?.text,
           }}
         >
-          {"Welcome to JewishLand"}
+          Welcome to JewelsLand
         </Typography>
 
         {/* Create the text 'Register' */}
@@ -120,7 +120,7 @@ function RegisterForm({ theme }) {
             color: theme?.text,
           }}
         >
-          {"Register"}
+          Register
         </Typography>
 
         {/* Boxes */}
