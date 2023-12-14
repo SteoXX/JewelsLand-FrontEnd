@@ -52,16 +52,16 @@ function Home({ theme }) {
   }, []);
 
   // Check if the user is logged in or not (session cookie)
-  const checkLoginStatus = () => {
-    axios
-      .get("http://localhost:3001/checkLoginStatus", { withCredentials: true })
-      .then((response) => {
-        if (response.data.isLoggedIn) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
-      });
+  const checkLoginStatus = async () => {
+    const instance = axios.create({ withCredentials: true });
+    const response = await instance.get(
+      "http://localhost:3001/checkLoginStatus"
+    );
+    if (response.data.isLoggedIn) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
   };
 
   // Logic to shoe/hide the drawer
