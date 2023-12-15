@@ -13,12 +13,13 @@ import { darken } from "polished";
 
 import axios from "axios";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginForm({ theme }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
 
   // When something changes in the text field, update the value of email and password
   const handleChangeEmail = (event) => {
@@ -45,11 +46,14 @@ function LoginForm({ theme }) {
     };
 
     // Send the data to the backend
-    const response = await axios.post("http://localhost:3001/login", user);
+    const response = await axios.post("http://localhost:3001/login", user, {
+      withCredentials: true,
+    });
 
     // Use the response data to navigate or show errors
     if (response.data.status === "LoginSuccessful") {
-      window.location.href = "http://localhost:3000";
+      navigate("/");
+      console.log(response.data);
     } else if (response.data.status === "InvalidCredentials") {
       alert("Invalid Credentials");
     } else if (response.data.status === "UserNotFound") {
