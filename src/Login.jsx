@@ -46,7 +46,7 @@ function LoginForm({ theme }) {
     };
 
     // Send the data to the backend
-    const response = await axios.post("http://localhost:3001/login", user, {
+    const response = await axios.post("https://localhost:443/login", user, {
       withCredentials: true,
     });
 
@@ -68,7 +68,7 @@ function LoginForm({ theme }) {
     event.preventDefault();
 
     const response = await axios.post(
-      "http://localhost:3001/resend_email_verification",
+      "https://localhost:443/resend_email_verification",
       { email: email }
     );
 

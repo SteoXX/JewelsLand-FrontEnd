@@ -21,7 +21,7 @@ function ForgotPassword({ theme }) {
   const handleContinue = async (event) => {
     event.preventDefault();
 
-    const response = await axios.post("http://localhost:3001/forgot_password", {
+    const response = await axios.post("https://localhost:443/forgot_password", {
       email: email,
     });
 

@@ -33,7 +33,7 @@ function Home({ theme }) {
 
   // Check if there are products in the database and set theme
   useEffect(() => {
-    axios.get("http://localhost:3001/displayProducts").then((response) => {
+    axios.get("https://localhost:443/displayProducts").then((response) => {
       setProducts(response.data);
     });
     console.log("Success");
@@ -53,7 +53,7 @@ function Home({ theme }) {
 
   // Check if the user is logged in or not (session cookie)
   const checkLoginStatus = async () => {
-    const response = await axios.get("http://localhost:3001/checkLoginStatus", {
+    const response = await axios.get("https://localhost:443/checkLoginStatus", {
       withCredentials: true,
     });
     if (response.data.isLoggedIn) {

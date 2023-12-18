@@ -64,7 +64,7 @@ function RegisterForm({ theme }) {
     };
 
     // Send the data to the backend
-    const response = await axios.post("http://localhost:3001/register", user);
+    const response = await axios.post("https://localhost:443/register", user);
 
     // Print the response from the backend to the console
     console.log(response.data.message);

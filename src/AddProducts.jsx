@@ -26,7 +26,7 @@ function UploadForm() {
     productData.append("category", category);
 
     axios
-      .post("http://localhost:3001/add_products", productData)
+      .post("https://localhost:443/add_products", productData)
       .then((response) => {
         console.log(response.data);
       })
