@@ -5,13 +5,16 @@ import VerifyEmail from "./VerifyEmail";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import AddProducts from "./AddProducts";
+import Account from "./Account";
 
-import { useState } from "react";
+import { AuthContext } from "./AuthContext";
+import React, { useContext, useState } from "react";
+
 import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { lightTheme, darkTheme } from "./themes";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   const GlobalStyle = createGlobalStyle`
@@ -44,17 +47,25 @@ function App() {
     window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
   );
 
+  // Get isLoggedIn from AuthContext
+  const { isLoggedIn } = useContext(AuthContext);
+
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
+      {/* Wrap the Routes with AuthProvider */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/verify_your_email/:token" element={<VerifyEmail />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/reset_password/:token" element={<ResetPassword />} />
         <Route path="/add_products" element={<AddProducts />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </ThemeProvider>
   );
