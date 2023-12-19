@@ -14,7 +14,7 @@ const AccountPage = ({ theme }) => {
   const [username, setUsername] = useState("");
   const [originalUsername, setOriginalUsername] = useState("");
   const inputRef = useRef();
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn, admin } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // When the page is rendered, take the username from the db and set it
@@ -102,6 +102,10 @@ const AccountPage = ({ theme }) => {
     navigate("/account/cart");
   };
 
+  const handleAddProductsClick = () => {
+    navigate("/add_products");
+  };
+
   // VISUALIZE THE PAGE
   return (
     <div
@@ -151,6 +155,16 @@ const AccountPage = ({ theme }) => {
           style={{ marginTop: "20px" }}
         >
           Save
+        </Button>
+      )}
+
+      {admin && (
+        <Button
+          variant="contained"
+          style={{ backgroundColor: "yellow", marginTop: "20px" }}
+          onClick={handleAddProductsClick}
+        >
+          Add new products
         </Button>
       )}
 
