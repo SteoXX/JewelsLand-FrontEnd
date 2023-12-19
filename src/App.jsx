@@ -6,6 +6,7 @@ import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
 import AddProducts from "./AddProducts";
 import Account from "./Account";
+import Cart from "./Cart";
 
 import { AuthContext } from "./AuthContext";
 import React, { useContext, useState } from "react";
@@ -65,7 +66,14 @@ function App() {
         <Route path="/forgot_password" element={<ForgotPassword />} />
         <Route path="/reset_password/:token" element={<ResetPassword />} />
         <Route path="/add_products" element={<AddProducts />} />
-        <Route path="/account" element={<Account />} />
+        <Route
+          path="/account"
+          element={!isLoggedIn ? <Navigate to="/" replace /> : <Account />}
+        />
+        <Route
+          path="/account/cart"
+          element={!isLoggedIn ? <Navigate to="/" replace /> : <Cart />}
+        />
       </Routes>
     </ThemeProvider>
   );

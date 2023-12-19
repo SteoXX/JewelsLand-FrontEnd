@@ -9,11 +9,9 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    console.log("ciao");
     axios
       .get("https://localhost:443/checkLoginStatus", { withCredentials: true })
       .then((response) => {
-        console.log(response);
         setIsLoggedIn(response.data.isLoggedIn);
       })
       .catch((error) => {

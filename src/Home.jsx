@@ -36,7 +36,6 @@ function Home({ theme }) {
     axios.get("https://localhost:443/displayProducts").then((response) => {
       setProducts(response.data);
     });
-    console.log("Success");
   }, []);
 
   // Logic to shoe/hide the drawer
@@ -50,6 +49,29 @@ function Home({ theme }) {
       navigate("/account");
     } else {
       navigate("/login");
+    }
+  };
+
+  // Logic to add the item to the user cart
+  const handleAddToCart = async (product) => {
+    if (isLoggedIn) {
+      try {
+        const response = await axios.post(
+          "https://localhost:443/addToCart",
+          { productId: product._id },
+          { withCredentials: true }
+        );
+
+        if (response.data.status === "ProductAdded") {
+          alert("Product added to cart successfully!");
+        } else {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        console.error("Failed to add product to cart:", error);
+      }
+    } else {
+      alert("You must login before adding to cart");
     }
   };
 
@@ -93,7 +115,9 @@ function Home({ theme }) {
                 {product.price + "$"}
               </Typography>
             </CardContent>
-            <Button size="small">Add to Cart</Button>
+            <Button size="small" onClick={() => handleAddToCart(product)}>
+              Add to Cart
+            </Button>
           </Card>
         ))}
       </Box>
