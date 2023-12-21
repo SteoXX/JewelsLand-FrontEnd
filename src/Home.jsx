@@ -56,13 +56,20 @@ function Home({ theme }) {
   const handleAddToCart = async (product) => {
     if (isLoggedIn) {
       try {
+        // Get the current quantity of the product in the cart
+        const currentProduct = products.find(
+          (prod) => prod._id === product._id
+        );
+        const currentQuantity = currentProduct?.quantity || 0;
+
         const response = await axios.post(
           "https://localhost:443/addToCart",
-          { productId: product._id },
+          { productId: product._id, quantity: currentQuantity + 1 },
           { withCredentials: true }
         );
 
         if (response.data.status === "ProductAdded") {
+          console.log(product._id);
           alert("Product added to cart successfully!");
         } else {
           alert(response.data.message);
@@ -72,6 +79,38 @@ function Home({ theme }) {
       }
     } else {
       alert("You must login before adding to cart");
+    }
+  };
+
+  const handleIncreaseQuantity = (product) => {
+    // Get the current quantity of the product in the cart
+    const currentProduct = products.find((prod) => prod._id === product._id);
+    const currentQuantity = currentProduct?.quantity || 0;
+
+    // Increase the quantity of the product in the local products state
+    setProducts(
+      products.map((prod) =>
+        prod._id === product._id
+          ? { ...prod, quantity: currentQuantity + 1 }
+          : prod
+      )
+    );
+  };
+
+  const handleDecreaseQuantity = (product) => {
+    // Get the current quantity of the product in the cart
+    const currentProduct = products.find((prod) => prod._id === product._id);
+    const currentQuantity = currentProduct?.quantity || 0;
+
+    if (currentQuantity > 0) {
+      // Decrease the quantity of the product in the local products state
+      setProducts(
+        products.map((prod) =>
+          prod._id === product._id
+            ? { ...prod, quantity: currentQuantity - 1 }
+            : prod
+        )
+      );
     }
   };
 
@@ -114,6 +153,44 @@ function Home({ theme }) {
               <Typography variant="body2" color="text.secondary">
                 {product.price + "$"}
               </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start", // Align everything to the left
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small" // Make the button smaller
+                  style={{ fontSize: "0.7rem", minWidth: "30px" }} // Adjust the font size and the minimum width to make the button smaller
+                  onClick={() => {
+                    if (product.quantity > 1) {
+                      // Prevent the quantity from going below 1
+                      handleDecreaseQuantity(product);
+                    }
+                  }}
+                >
+                  -
+                </Button>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{ margin: "0 10px" }}
+                >
+                  {product.quantity || 1}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small" // Make the button smaller
+                  style={{ fontSize: "0.7rem", minWidth: "30px" }} // Adjust the font size and the minimum width to make the button smaller
+                  onClick={() => handleIncreaseQuantity(product)}
+                >
+                  +
+                </Button>
+              </div>
             </CardContent>
             <Button size="small" onClick={() => handleAddToCart(product)}>
               Add to Cart

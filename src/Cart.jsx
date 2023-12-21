@@ -110,8 +110,8 @@ const Cart = ({ theme }) => {
             </IconButton>
             <CardMedia
               component="img"
-              image={`data:image/jpeg;base64,${item.image}`} // Convert the image from base64 to a data url
-              alt={item.name}
+              image={`data:image/jpeg;base64,${item.productId.image}`} // Convert the image from base64 to a data url
+              alt={item.productId.name}
               sx={{
                 width: "100%",
                 maxHeight: "200px",
@@ -120,10 +120,10 @@ const Cart = ({ theme }) => {
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {item.name}
+                {item.productId.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {item.price + "$"}
+                {item.productId.price + "$"}
               </Typography>
             </CardContent>
           </Card>
