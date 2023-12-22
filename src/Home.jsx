@@ -60,11 +60,11 @@ function Home({ theme }) {
         const currentProduct = products.find(
           (prod) => prod._id === product._id
         );
-        const currentQuantity = currentProduct?.quantity || 0;
+        const currentQuantity = currentProduct?.quantity;
 
         const response = await axios.post(
           "https://localhost:443/addToCart",
-          { productId: product._id, quantity: currentQuantity + 1 },
+          { productId: product._id, quantity: currentQuantity },
           { withCredentials: true }
         );
 
