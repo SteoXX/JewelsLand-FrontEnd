@@ -7,6 +7,7 @@ import ResetPassword from "./ResetPassword";
 import AddProducts from "./AddProducts";
 import Account from "./Account";
 import Cart from "./Cart";
+import PaymentForm from "./PaymentForm";
 
 import { AuthContext } from "./AuthContext";
 import React, { useContext, useState } from "react";
@@ -73,6 +74,12 @@ function App() {
         <Route
           path="/account/cart"
           element={!isLoggedIn ? <Navigate to="/" replace /> : <Cart />}
+        />
+        <Route
+          path="/payment"
+          element={
+            isLoggedIn ? <Navigate to="/login" replace /> : <PaymentForm />
+          }
         />
       </Routes>
     </ThemeProvider>

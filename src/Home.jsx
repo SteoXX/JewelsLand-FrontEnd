@@ -17,6 +17,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
 import { withTheme } from "styled-components";
@@ -26,17 +27,42 @@ import axios from "axios";
 
 function Home({ theme }) {
   const [open, setOpen] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [userImage, setUserImage] = useState("");
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchContent, setSearchContent] = useState("");
+  const [triggerSearch, setTriggerSearch] = useState(false);
   const navigate = useNavigate();
 
   // Check if there are products in the database and set theme
   useEffect(() => {
-    axios.get("https://localhost:443/displayProducts").then((response) => {
-      setProducts(response.data);
-    });
-  }, []);
+    axios
+      .get(`https://localhost:443/displayProducts`, {
+        params: {
+          category: selectedCategory,
+        },
+      })
+      .then((response) => {
+        setProducts(response.data);
+      });
+  }, [selectedCategory]);
+
+  // Render the products that match the searched info
+  useEffect(() => {
+    if (searchContent) {
+      // Only run if searchContent is not empty
+      axios
+        .get(`https://localhost:443/displayProducts`, {
+          params: {
+            searchContent: searchContent,
+          },
+        })
+        .then((response) => {
+          setProducts(response.data);
+        });
+    }
+  }, [triggerSearch]); // Only run when triggerSearch changes
 
   // Logic to shoe/hide the drawer
   const handleShowHideDrawer = () => {
@@ -82,6 +108,7 @@ function Home({ theme }) {
     }
   };
 
+  // Increse the quantity of the product
   const handleIncreaseQuantity = (product) => {
     // Get the current quantity of the product in the cart
     const currentProduct = products.find((prod) => prod._id === product._id);
@@ -97,6 +124,7 @@ function Home({ theme }) {
     );
   };
 
+  // Decrese the quantity of the product
   const handleDecreaseQuantity = (product) => {
     // Get the current quantity of the product in the cart
     const currentProduct = products.find((prod) => prod._id === product._id);
@@ -112,6 +140,19 @@ function Home({ theme }) {
         )
       );
     }
+  };
+
+  // Handle the click on the navbar
+  const handleListItemClick = (category) => {
+    setSearchContent(""); // Reset the search content
+    setSelectedCategory(category); // Select the category
+    setOpen(false); // Close the drawer
+  };
+
+  // Handle the search for products
+  const handleSearch = () => {
+    setSelectedCategory(""); // Reset the selected category
+    setTriggerSearch((prev) => !prev);
   };
 
   return (
@@ -212,6 +253,30 @@ function Home({ theme }) {
               <ViewHeadlineIcon />
             </IconButton>
 
+            <TextField
+              placeholder="Search..."
+              onChange={(event) => setSearchContent(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault(); // Prevent the form from being submitted
+                  handleSearch();
+                }
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: theme?.text,
+                  },
+                  "&:hover fieldset": {
+                    borderColor: theme?.text,
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: theme?.text,
+                  },
+                },
+              }}
+            />
+
             <Box sx={{ flexGrow: 1 }} />
 
             <Typography
@@ -232,24 +297,33 @@ function Home({ theme }) {
             </IconButton>
           </Toolbar>
         </AppBar>
+
+        {/* Navbar with categories */}
         <Drawer
           open={open}
           variant="temporary"
+          onClose={() => setOpen(false)} // Close the drawer when you click outside of it
+          ModalProps={{ keepMounted: true, disableScrollLock: true }} // Disable scroll to the left side when the drawer is opened
           sx={{
             width: "240px",
             flexShrink: 0,
             "& .MuiDrawer-paper": {
               width: "240px",
               boxSizing: "border-box",
+              backgroundColor: darken(0.08, theme?.bgcolor),
             },
           }}
         >
           <Toolbar />
           <div sx={{ overflow: "auto" }}>
             <List>
-              {["Section 1", "Section 2", "Section 3"].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text} />
+              {["Rings", "Necklaces", "Earrings"].map((text, index) => (
+                <ListItem
+                  button
+                  key={text}
+                  onClick={() => handleListItemClick(text)}
+                >
+                  <ListItemText primary={text} sx={{ color: theme?.text }} />
                 </ListItem>
               ))}
             </List>

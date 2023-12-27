@@ -161,7 +161,7 @@ const AccountPage = ({ theme }) => {
       {admin && (
         <Button
           variant="contained"
-          style={{ backgroundColor: "yellow", marginTop: "20px" }}
+          style={{ backgroundColor: "green", marginTop: "20px" }}
           onClick={handleAddProductsClick}
         >
           Add new products
