@@ -28,6 +28,7 @@
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
     "sequelize": "^6.35.1",
+    "serve": "^14.2.1",
     "session": "^0.1.0",
     "styled-components": "^6.1.1",
     "web-vitals": "^2.1.4"
