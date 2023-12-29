@@ -28,7 +28,7 @@ import axios from "axios";
 function Home({ theme }) {
   const [open, setOpen] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
-  const [userImage, setUserImage] = useState("");
+  const [userImage] = useState("");
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchContent, setSearchContent] = useState("");
@@ -62,7 +62,7 @@ function Home({ theme }) {
           setProducts(response.data);
         });
     }
-  }, [triggerSearch]); // Only run when triggerSearch changes
+  }, [triggerSearch, searchContent]); // Only run when triggerSearch changes
 
   // Logic to shoe/hide the drawer
   const handleShowHideDrawer = () => {
