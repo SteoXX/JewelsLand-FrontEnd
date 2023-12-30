@@ -11,15 +11,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "20.10.0"
-      - name: Install Dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Install serve
-        run: npm install -g serve
-      - name: Start
-        run: serve -s build --ssl-cert "./cert/cert.pem" --ssl-key "./cert/key.pem"
+      - name: Trigger Docker
+        run: |
+          docker stop jewelsland-frontend-container || true
+          docker rm jewelsland-frontend-container || true
+          docker run -d --name jewelsland-frontend-container -p 3000:3000 jewelsland-frontend:latest
