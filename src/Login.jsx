@@ -153,6 +153,11 @@ function LoginForm({ theme }) {
             InputProps={{
               style: { borderRadius: "12px" },
             }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
             // changing email logic
             value={email}
             onChange={handleChangeEmail}
@@ -174,11 +179,21 @@ function LoginForm({ theme }) {
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     edge="end"
+                    sx={{
+                      "& .MuiSvgIcon-root": {
+                        color: theme?.text,
+                      },
+                    }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
+            }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
             }}
             // changing password logic
             value={password}

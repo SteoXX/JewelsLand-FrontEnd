@@ -273,6 +273,9 @@ function Home({ theme }) {
                   "&.Mui-focused fieldset": {
                     borderColor: theme?.text,
                   },
+                  "& .css-1x5jdmq": {
+                    color: theme?.text,
+                  },
                 },
               }}
             />

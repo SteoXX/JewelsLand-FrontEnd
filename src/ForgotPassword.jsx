@@ -104,6 +104,11 @@ function ForgotPassword({ theme }) {
             // changing email logic
             value={email}
             onChange={handleChangeEmail}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
           />
         </Box>
 

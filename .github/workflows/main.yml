@@ -22,4 +22,4 @@ jobs:
       - name: Install serve
         run: npm install -g serve
       - name: Start
-        run: serve -s build
+        run: serve -s build --ssl-cert "./cert/cert.pem" --ssl-key "./cert/key.pem"

@@ -30,16 +30,6 @@ function App() {
     color: ${(props) => props.theme.text};
   }
 
-  // CHANGE COLOR OF THE PLACEHOLDERS (email and password)
-  .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
-    color: ${(props) => props.theme.text}!important;
-  }
-
-  // CHANGE COLOR OF THE SHOW/HIDE ICONS (password and confirm password)
-  .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root, .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-    color: ${(props) => props.theme.text}!important;
-  }
-
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     color: ${(props) => props.theme.text}!important;
   }
