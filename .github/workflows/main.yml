@@ -16,4 +16,4 @@ jobs:
         run: |
           sudo docker stop jewelsland-frontend-container || true
           sudo docker rm jewelsland-frontend-container || true
-          sudo docker run -d --name jewelsland-frontend-container -p 3000:3000 jewelsland-frontend:latest
+          sudo docker run -d --network=host --name jewelsland-frontend-container -p 3000:3000 jewelsland-frontend:latest
