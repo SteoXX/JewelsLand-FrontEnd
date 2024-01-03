@@ -37,29 +37,8 @@ function Home({ theme }) {
 
   // Check if there are products in the database and set theme
   useEffect(() => {
-    // Create an Axios instance
-    const axiosInstance = axios.create({
-      baseURL: "https://localhost:443",
-    });
-
-    // Add a response interceptor
-    axiosInstance.interceptors.response.use(
-      (response) => {
-        // Any status code that lies within the range of 2xx causes this function to trigger
-        // Do something with the response data
-        return response;
-      },
-      (error) => {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with the response error
-        console.log("An error occurred:", error);
-        return Promise.reject(error);
-      }
-    );
-
-    // Use the Axios instance to make the request
-    axiosInstance
-      .get("/displayProducts", {
+    axios
+      .get(`https://localhost:443/displayProducts`, {
         params: {
           category: selectedCategory,
         },
@@ -67,7 +46,7 @@ function Home({ theme }) {
       .then((response) => {
         setProducts(response.data);
       });
-  });
+  }, [selectedCategory]);
 
   // Render the products that match the searched info
   useEffect(() => {
