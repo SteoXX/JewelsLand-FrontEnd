@@ -22,7 +22,7 @@ const AccountPage = ({ theme }) => {
     const fetchUsername = async () => {
       try {
         const response = await axios.get(
-          "https://localhost:443/showUserAccountInfo",
+          `https://${process.env.REACT_APP_ORIGIN}:443/showUserAccountInfo`,
           { withCredentials: true }
         );
         setUsername(response.data.username);
@@ -57,7 +57,7 @@ const AccountPage = ({ theme }) => {
   const handleSaveClick = async () => {
     try {
       const response = await axios.post(
-        "https://localhost:443/updateUserAccountInfo",
+        `https://${process.env.REACT_APP_ORIGIN}:443/updateUserAccountInfo`,
         { newUsername: username },
         { withCredentials: true }
       );
@@ -80,7 +80,7 @@ const AccountPage = ({ theme }) => {
   const handleLogoutClick = async () => {
     try {
       const response = await axios.post(
-        "https://localhost:443/logout",
+        `https://${process.env.REACT_APP_ORIGIN}:443/logout`,
         {},
         { withCredentials: true }
       );

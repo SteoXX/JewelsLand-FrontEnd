@@ -38,7 +38,7 @@ function Home({ theme }) {
   // Check if there are products in the database and set theme
   useEffect(() => {
     axios
-      .get(`https://localhost:443/displayProducts`, {
+      .get(`https://${process.env.REACT_APP_ORIGIN}:443/displayProducts`, {
         params: {
           category: selectedCategory,
         },
@@ -53,7 +53,7 @@ function Home({ theme }) {
     if (searchContent) {
       // Only run if searchContent is not empty
       axios
-        .get(`https://localhost:443/displayProducts`, {
+        .get(`https://${process.env.REACT_APP_ORIGIN}:443/displayProducts`, {
           params: {
             searchContent: searchContent,
           },
@@ -89,7 +89,7 @@ function Home({ theme }) {
         const currentQuantity = currentProduct?.quantity;
 
         const response = await axios.post(
-          "https://localhost:443/addToCart",
+          `https://${process.env.REACT_APP_ORIGIN}:443/addToCart`,
           { productId: product._id, quantity: currentQuantity },
           { withCredentials: true }
         );

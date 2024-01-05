@@ -35,9 +35,13 @@ function UploadForm({ theme }) {
       productData.append("category", category);
 
       axios
-        .post("https://localhost:443/add_products", productData, {
-          withCredentials: true,
-        })
+        .post(
+          `https://${process.env.REACT_APP_ORIGIN}:443/add_products`,
+          productData,
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => {
           console.log(response.data);
         })

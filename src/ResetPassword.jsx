@@ -54,7 +54,7 @@ function ResetPassword({ theme }) {
 
     // Send the data to the backend
     const response = await axios.post(
-      `https://localhost:443/reset_password/${token}`,
+      `https://${process.env.REACT_APP_ORIGIN}:443/reset_password/${token}`,
       {
         changePasswordToken: token,
         password: password,

@@ -12,7 +12,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Request to see if the user is logged in
     axios
-      .get("https://localhost:443/checkLoginStatus", { withCredentials: true })
+      .get(`https://${process.env.REACT_APP_ORIGIN}:443/checkLoginStatus`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setIsLoggedIn(response.data.isLoggedIn);
       })
@@ -22,7 +24,9 @@ export const AuthProvider = ({ children }) => {
 
     // Request to see if the user is an administrator
     axios
-      .get("https://localhost:443/checkAdminStatus", { withCredentials: true })
+      .get(`https://${process.env.REACT_APP_ORIGIN}:443/checkAdminStatus`, {
+        withCredentials: true,
+      })
       .then((response) => {
         setAdmin(response.data.admin);
       })

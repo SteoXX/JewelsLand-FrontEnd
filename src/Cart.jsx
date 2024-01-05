@@ -21,9 +21,12 @@ const Cart = ({ theme }) => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get("https://localhost:443/getCartItems", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `https://${process.env.REACT_APP_ORIGIN}:443/getCartItems`,
+          {
+            withCredentials: true,
+          }
+        );
         setCartItems(response.data.items);
       } catch (error) {
         console.error("Failed to fetch cart items:", error);
@@ -36,7 +39,7 @@ const Cart = ({ theme }) => {
   const handleRemoveFromCart = async (item) => {
     try {
       const response = await axios.post(
-        "https://localhost:443/removeFromCart",
+        `https://${process.env.REACT_APP_ORIGIN}:443/removeFromCart`,
         { itemId: item._id },
         { withCredentials: true }
       );
@@ -73,7 +76,7 @@ const Cart = ({ theme }) => {
     try {
       // Send a request to backend to update the quantity of the item in the cart
       const response = await axios.post(
-        "https://localhost:443/updateCartItem",
+        `https://${process.env.REACT_APP_ORIGIN}:443/updateCartItem`,
         { itemId: item._id, quantity: item.quantity },
         { withCredentials: true }
       );

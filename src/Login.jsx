@@ -48,9 +48,13 @@ function LoginForm({ theme }) {
     };
 
     // Send the data to the backend
-    const response = await axios.post("https://localhost:443/login", user, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      `https://${process.env.REACT_APP_ORIGIN}:443/login`,
+      user,
+      {
+        withCredentials: true,
+      }
+    );
 
     // Use the response data to navigate or show errors
     if (response.data.status === "LoginSuccessful") {
@@ -70,7 +74,7 @@ function LoginForm({ theme }) {
     event.preventDefault();
 
     const response = await axios.post(
-      "https://localhost:443/resend_email_verification",
+      `https://${process.env.REACT_APP_ORIGIN}:443/resend_email_verification`,
       { email: email }
     );
 

@@ -19,7 +19,7 @@ function VerifyEmail({ theme }) {
     event.preventDefault();
 
     const response = await axios.post(
-      `https://localhost:443/verify_your_email/${token}`,
+      `https://${process.env.REACT_APP_ORIGIN}:443/verify_your_email/${token}`,
       { emailVerificationToken: token }
     );
 
@@ -41,7 +41,7 @@ function VerifyEmail({ theme }) {
     event.preventDefault();
 
     const response = await axios.post(
-      "https://localhost:443/get_new_email_verification_token",
+      `https://${process.env.REACT_APP_ORIGIN}:443/get_new_email_verification_token`,
       { oldEmailVerificationToken: token }
     );
 
