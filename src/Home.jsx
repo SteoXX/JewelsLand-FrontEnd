@@ -277,6 +277,9 @@ function Home({ theme }) {
                     color: theme?.text,
                   },
                 },
+                "& .MuiOutlinedInput-input": {
+                  color: theme?.text,
+                },
               }}
             />
 

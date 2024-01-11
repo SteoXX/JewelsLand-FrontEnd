@@ -102,7 +102,7 @@ function ForgotPassword({ theme }) {
             fullWidth
             // rounding the border of the input field
             InputProps={{
-              style: { borderRadius: "12px" },
+              style: { borderRadius: "12px", color: theme?.text },
             }}
             // changing email logic
             value={email}

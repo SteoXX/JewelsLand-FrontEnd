@@ -144,7 +144,7 @@ function RegisterForm({ theme }) {
             type="email"
             fullWidth
             InputProps={{
-              style: { borderRadius: "12px" },
+              style: { borderRadius: "12px", color: theme?.text },
             }}
             sx={{
               "& .MuiInputLabel-root": {
@@ -202,7 +202,7 @@ function RegisterForm({ theme }) {
             autoComplete="current-password"
             fullWidth
             InputProps={{
-              style: { borderRadius: "12px" },
+              style: { borderRadius: "12px", color: theme?.text },
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton

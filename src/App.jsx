@@ -28,12 +28,7 @@ function App() {
     background-color: ${(props) =>
       props.theme.bgcolor};  remove this to fix the bg color
     color: ${(props) => props.theme.text};
-  }
-
-  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-    color: ${(props) => props.theme.text}!important;
-  }
-`;
+  }`;
 
   const [theme] = useState(
     window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"

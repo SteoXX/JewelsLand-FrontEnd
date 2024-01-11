@@ -92,30 +92,70 @@ function UploadForm({ theme }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
+            InputProps={{
+              style: { borderRadius: "12px", color: theme?.text },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
           />
           <TextField
             label="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             fullWidth
+            InputProps={{
+              style: { borderRadius: "12px", color: theme?.text },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
           />
           <TextField
             label="Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             fullWidth
+            InputProps={{
+              style: { borderRadius: "12px", color: theme?.text },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
           />
           <TextField
             label="Stock"
             value={stock}
             onChange={(e) => setStock(e.target.value)}
             fullWidth
+            InputProps={{
+              style: { borderRadius: "12px", color: theme?.text },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
           />
           <TextField
             label="Category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             fullWidth
+            InputProps={{
+              style: { borderRadius: "12px", color: theme?.text },
+            }}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme?.text,
+              },
+            }}
           />
           <Box
             component="label"
@@ -125,7 +165,7 @@ function UploadForm({ theme }) {
               alignItems: "center",
               padding: "10px",
               mt: 1,
-              color: theme?.text,
+              color: theme?.bgcolor,
               backgroundColor: "#f0f0f0",
               borderRadius: "4px",
               cursor: "pointer",
